@@ -48,6 +48,12 @@ app.get("/listings",async (req,res)=>{
   
 })
 
+//new route
+
+app.get("/listings/new",(req,res)=>{
+    res.render("listings/new.ejs")
+})
+
 //show route
 
 app.get("/listings/:id",async (req,res) =>{
@@ -56,6 +62,17 @@ app.get("/listings/:id",async (req,res) =>{
     const listing = await Listing.findById(id)
     res.render("listings/show.ejs",{listing})
 })
+
+//create route
+
+app.post("/listings",async (req,res)=>{
+   let listing = new Listing(req.body.listing)
+   await listing.save() //new data is saved in db
+   res.redirect("/listings")  
+
+})
+
+
 
 
 
