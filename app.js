@@ -1,4 +1,4 @@
-const express = require("Express")
+const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const Listing = require("./models/listing.js")
@@ -7,6 +7,7 @@ const path = require("path")
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"))
+app.use(express.urlencoded({extended:true}))
 
 async function main(){
     await mongoose.connect('mongodb://127.0.0.1:27017/test')
@@ -45,6 +46,15 @@ app.get("/listings",async (req,res)=>{
      console.log(allListings)  
      res.render("listings/index.ejs",{allListings})
   
+})
+
+//show route
+
+app.get("/listings/:id",async (req,res) =>{
+    let{id} = req.params
+    console.log(id)
+    const listing = await Listing.findById(id)
+    res.render("listings/show.ejs",{listing})
 })
 
 
