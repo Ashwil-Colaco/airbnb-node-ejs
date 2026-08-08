@@ -105,3 +105,11 @@ body {
 .listing-link {
     text-decoration: none !important;
 }
+
+
+/* buttons */
+.add-btn{
+    background-color: #fe424d !important;
+    color: white !important;
+    border: none !important;
+}

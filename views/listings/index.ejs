@@ -18,12 +18,12 @@
                         <div class="card-body">
                             <p class="card-title">
                                 <%= listing.title %><br />
-                                    &#8377;<%= listing.price.toLocaleString("en-IN") %>
+                                   ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : "0" %>
+
                             </p>
                         </div>
                     </div>
                 </a>
                 <% } %>
-        </div>
         </div>
     </body>
