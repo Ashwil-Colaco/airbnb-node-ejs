@@ -1,20 +1,32 @@
-.navbar{
-    height:5rem;
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+
+
+.navbar {
+    height: 5rem;
     background-color: white;
 }
 
-.fa-compass{
-    color:#fe424d;
+.fa-compass {
+    color: #fe424d;
 }
 
-.nav-link{
-     color:#222222 !important;  /* because bootstrap has its own color for nav-link, we need to override it */
+.nav-link {
+    color: #222222 !important;
+    /* because bootstrap has its own color for nav-link, we need to override it */
 }
 
 /* FOOTER */
 
-.f-info{
-    height:8rem;
+.f-info {
+    height: 8rem;
     background-color: #ebebeb;
     display: flex;
     justify-content: center;
@@ -23,34 +35,68 @@
     direction: column;
 }
 
-.f-info-links, .f-info-socials{
+.f-info-links,
+.f-info-socials {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: space-evenly;
 }
 
-.f-info-brand{
+.f-info-brand {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: space-evenly;
 }
 
-.f-info-socials i{
+.f-info-socials i {
     font-size: 1.1rem;
     margin-right: 1rem;
 }
-.f-info-links a{
+
+.f-info-links a {
     text-decoration: none;
-    color:#222222;
+    color: #222222;
 }
 
-.f-info-links a:hover{
+.f-info-links a:hover {
     text-decoration: underline;
-    color:#fe424d;
+    color: #fe424d;
+}
+
+/* CARD */
+.card {
+    margin-bottom: 1rem;
+    border: none !important;
+}
+
+.card-img-top {
+    border-radius: 0.5rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+
+.card-img-overlay {
+    opacity: 0 !important;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2 !important;
+    background-color: white !important;
 }
 
 
 
-
+.listing-link {
+    text-decoration: none !important;
+}
