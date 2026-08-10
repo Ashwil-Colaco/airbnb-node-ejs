@@ -3,10 +3,16 @@
         <div class="col-8 offset-2">
             <br></br>
             <h3>Create a new LIST!!!</h3>
-            <form method="POST" action="/listings">
+            <form method="POST" action="/listings" class="needs-validation" novalidate>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input name="listing[title]" placeholder="enter title" type="text" class="form-control">
+                    <input name="listing[title]" placeholder="enter title" type="text" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid title.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good! 
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -17,7 +23,7 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input name="listing[image][url]" placeholder="enter image url" type="text" class="form-control">
+                    <input name="listing[image][url]" placeholder="enter image url" type="text" class="form-control" required>
                 </div>
 
                 <div class="row">
@@ -40,7 +46,7 @@
                 </div>
 
                 <button class="btn btn-dark add-btn" type="submit">SUBMIT</button>
-            <br></br></form>
+            <br></br>
             </form>
         </div>
     </div>
