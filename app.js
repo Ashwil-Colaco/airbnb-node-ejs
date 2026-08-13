@@ -7,7 +7,8 @@ const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")
 const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js")
-const { listingSchema } = require("./schema.js")
+const { listingSchema, reviewSchema } = require("./schema.js")
+const Review = require("./models/review.js")
 
 app.engine('ejs', ejsMate)
 app.set("view engine", "ejs");
@@ -32,10 +33,25 @@ main()
 
 const validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body)
-    let errMsg = error.object.map((el)=>el.message).join(",")
-    throw new ExpressError(400,errMsg) // print more detailed err ms
+
     if (error) {
-        throw new ExpressError(400, error)
+        let errMsg = error.details.map((el) => el.message).join(",")
+        next(new ExpressError(400, errMsg))// print more detailed err ms
+        // throw new ExpressError(400, error)
+    } else {
+        next()
+    }
+}
+
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body)
+
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",")
+        next(new ExpressError(400, errMsg)) // print more detailed err ms
+        // throw new ExpressError(400, error)
+    } else {
+        next()
     }
 }
 
@@ -121,6 +137,19 @@ app.delete("/listings/:id", async (req, res) => {
     console.log(deletedData)
     res.redirect("/listings")
 })
+
+//review
+app.post("/listings/:id/reviews", validateReview,wrapAsync(async (req, res) => {
+    let listing = await Listing.findById(req.params.id)
+    let newReview = new Review(req.body.review)
+    listing.reviews.push(newReview)
+
+    await newReview.save()
+    await listing.save()
+
+    console.log("new review saved")
+    res.send("new review saved")
+}))
 
 
 // app.use((err,req,res,next)=>{
