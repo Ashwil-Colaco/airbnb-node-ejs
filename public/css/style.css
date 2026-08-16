@@ -71,8 +71,8 @@ body {
 }
 
 /* CARD */
-.card {
-    margin-bottom: 1rem;
+.listing-card {
+    margin-bottom: 1rem !important;
     border: none !important;
 }
 

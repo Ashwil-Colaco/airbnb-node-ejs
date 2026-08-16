@@ -9,6 +9,11 @@ const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js")
 const { listingSchema, reviewSchema } = require("./schema.js")
 const Review = require("./models/review.js")
+const listings = require("./routes/listings.js")
+const reviews = require("./routes/review.js")
+const review = require("./models/review.js")
+const session = require("express-session")
+const flash = require("connect-flash")
 
 app.engine('ejs', ejsMate)
 app.set("view engine", "ejs");
@@ -16,7 +21,6 @@ app.set("views", path.join(__dirname, "views"))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 app.use(express.static(path.join(__dirname, "/public")))
-
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/test')
@@ -55,6 +59,31 @@ const validateReview = (req, res, next) => {
     }
 }
 
+
+const sessionOptions = {
+    secret : "mysupersecretcode",
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        expiry:Date.now() + 7 *24 * 60 * 60 * 1000,
+        maxAge:7 * 24 * 60 * 60 * 1000,
+        httpOnly:true
+    }
+}
+
+app.use(session(sessionOptions)) //you can verify in applictaions in inspect to check of session id was created
+app.use(flash())
+
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success")
+    res.locals.error = req.flash("error")
+    next()
+})
+
+app.use("/listings",listings)
+app.use("/listings/:id/reviews",reviews)
+
+
 app.get("/", (req, res) => {
     res.send("YO WASSUP im the root")
 })
@@ -73,83 +102,7 @@ app.get("/", (req, res) => {
 //     res.send("sucessful testing")
 // })
 
-//Index Route
-app.get("/listings", async (req, res) => {
-    const allListings = await Listing.find({})
-    console.log(allListings)
-    res.render("listings/index.ejs", { allListings })
 
-})
-
-//new route
-
-app.get("/listings/new", (req, res) => {
-    res.render("listings/new.ejs")
-})
-
-//edit route
-app.get("/listings/:id/edit", async (req, res) => {
-    let { id } = req.params
-    const listing = await Listing.findById(id)      //finding that particular list to edit 
-    res.render("listings/edit.ejs", { listing })
-})
-
-//show route
-
-app.get("/listings/:id", async (req, res) => {
-    let { id } = req.params
-    console.log(id)
-    const listing = await Listing.findById(id)
-    res.render("listings/show.ejs", { listing })
-})
-
-//create route
-
-app.post("/listings", validateListing, wrapAsync(async (req, res) => {
-    // if (!req.body.listing) {
-    //     throw new ExpressError(400, "send valid data")
-    // }
-    // let result = listingSchema.validate(req.body) // checks if all checks specified by joi in schema.js is satisfied in req.body.listing
-    // console.log(result)
-    // if(result.error){
-    //     throw new ExpressError(400,"Validation err")
-    // }
-    let listing = new Listing(req.body.listing)
-    await listing.save() //new data is saved in db
-    res.redirect("/listings")
-}))
-
-//update route
-
-app.put("/listings/:id", async (req, res) => {
-    if (!req.body.listing) {
-        throw new ExpressError(400, "send valid data")
-    }
-    let { id } = req.params
-    await Listing.findByIdAndUpdate(id, req.body.listing)
-    res.redirect(`/listings/${id}`)
-})
-
-//delete
-app.delete("/listings/:id", async (req, res) => {
-    let { id } = req.params
-    let deletedData = await Listing.findByIdAndDelete(id)
-    console.log(deletedData)
-    res.redirect("/listings")
-})
-
-//review
-app.post("/listings/:id/reviews", validateReview,wrapAsync(async (req, res) => {
-    let listing = await Listing.findById(req.params.id)
-    let newReview = new Review(req.body.review)
-    listing.reviews.push(newReview)
-
-    await newReview.save()
-    await listing.save()
-
-    console.log("new review saved")
-    res.send("new review saved")
-}))
 
 
 // app.use((err,req,res,next)=>{
