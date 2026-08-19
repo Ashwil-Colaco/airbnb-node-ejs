@@ -1,0 +1,21 @@
+<% layout("/layouts/biolerplate") %>
+
+<div class="row mt-3">
+  <div class="col-6 offset-3 mt-2">
+    <h2>Log In</h2>
+    <form method="POST" action="/login" class="needs-validation"  novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+        <div class="valid-feedback">Username is valid.</div>
+    </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+        <div class="valid-feedback">Password is valid.</div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">Login</button>
+    </form>
+  </div>
+</div>

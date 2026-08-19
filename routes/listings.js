@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js")
 const ExpressError = require("../utils/ExpressError.js")
 const { listingSchema, reviewSchema } = require("../schema.js")
 const Listing = require("../models/listing.js")
+const {isLoggedIn} = require("../middleware.js")
 
 
 const validateListing = (req, res, next) => {
@@ -40,12 +41,14 @@ router.get("/", async (req, res) => {
 
 //new route
 
-router.get("/new", (req, res) => {
+router.get("/new",isLoggedIn, (req, res) => { // isLoggedIn is a custom middleware which checks if user is logged in
+    console.log(req.user)// printing user info
+  
     res.render("listings/new.ejs")
 })
 
 //edit route
-router.get("/:id/edit", async (req, res) => {
+router.get("/:id/edit", isLoggedIn,async (req, res) => {
     let { id } = req.params
     const listing = await Listing.findById(id)      //finding that particular list to edit 
     res.render("listings/edit.ejs", { listing })
@@ -83,13 +86,13 @@ router.post("/", validateListing, wrapAsync(async (req, res) => {
 
 //update route
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", isLoggedIn,async (req, res) => {
     if (!req.body.listing) {
         throw new ExpressError(400, "send valid data")
     }
     let { id } = req.params
     await Listing.findByIdAndUpdate(id, req.body.listing)
-     req.flash("success","Updated the list!")
+    req.flash("success","Updated the list!")
     res.redirect(`/listings/${id}`)
 })
 

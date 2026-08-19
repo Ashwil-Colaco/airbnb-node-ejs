@@ -5,17 +5,24 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+      <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
+        
           <a class="nav-link" href="/listings">All Listings</a>
-        </li>
-        <li class="nav-item">
+        
           <a class="nav-link" href="/listings/new">Add New Listing</a>
-        </li>
-      </ul>
+        
+      </div>
+
+       <div class="navbar-nav ms-auto">
+        <% if(!currentUser) { %>
+          <a class="nav-link active" aria-current="page" href="/signup">SignUp</a>
+        
+          <a class="nav-link" href="/login">Login</a>
+        <% } else { %>
+          <a class="nav-link" href="/logout">Logout</a>
+        <% } %>
+      </div>
     </div>
   </div>
 </nav>
