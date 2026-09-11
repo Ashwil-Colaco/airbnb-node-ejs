@@ -24,14 +24,22 @@ const listingSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
+    ],
+    owner:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
+    category: {
+        type:String,
+        enum:["mountain","rooms","city","forts","camping","farms","arctic","tropical","forest","lake","hotsprings"]
+    }
 })
 
 listingSchema.post("findOneAndDelete", async (listing) => {
     if (listing) {
         await Review.deleteMany({ _id: { $in: listing.reviews } })
     }
-}) // deletes review when a particular listing is deleted
+})
 
 const Listing = mongoose.model("Listing", listingSchema)
 module.exports = Listing

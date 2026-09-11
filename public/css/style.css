@@ -12,8 +12,6 @@ body {
     flex: 1;
 }
 
-
-
 .navbar {
     min-height: 5rem !important;
     background-color: white;
@@ -25,10 +23,7 @@ body {
 
 .nav-link {
     color: #222222 !important;
-    /* because bootstrap has its own color for nav-link, we need to override it */
 }
-
-/* FOOTER */
 
 .f-info {
     height: 8rem;
@@ -70,7 +65,6 @@ body {
     color: #fe424d;
 }
 
-/* CARD */
 .listing-card {
     margin-bottom: 1rem !important;
     border: none !important;
@@ -90,7 +84,6 @@ body {
     font-weight: 400 !important;
 }
 
-
 .card-img-overlay {
     opacity: 0 !important;
 }
@@ -100,14 +93,10 @@ body {
     background-color: white !important;
 }
 
-
-
 .listing-link {
     text-decoration: none !important;
 }
 
-
-/* buttons */
 .add-btn{
     background-color: #fe424d !important;
     color: white !important;

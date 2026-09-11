@@ -14,9 +14,10 @@ main()
     console.log("Db not connected",err)
 })
 
-
 const initDB = async()=>{
     await Listing.deleteMany({});
+    initData.data = initData.data.map((obj)=>({...obj,owner:"6a85303e45b64d4f592aa73a"}))
+    
     await Listing.insertMany(initData.data);
     console.log("DAta is initited")
 }
