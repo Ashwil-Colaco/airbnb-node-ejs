@@ -70,7 +70,7 @@ const validateReview = (req, res, next) => {
 const store = MongoStore.create({
     mongoUrl: URL,
     crypto: {
-        secret: process.env.secret
+        secret: process.env.SECRET
     },
     touchAfter: 24 * 3600
 });
@@ -80,8 +80,8 @@ store.on("error", (err) => {
 });
 
 const sessionOptions = {
-    store:store,
-    secret: process.env.secret,
+    store: store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {

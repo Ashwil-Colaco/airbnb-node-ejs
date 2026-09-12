@@ -14,6 +14,5 @@ const storage = new CloudinaryStorage({
         allowed_formats: ['jpg', 'png', 'jpeg']
     },
 });
-console.log(process.env.cloud_name)
 
-module.exports = { cloudinary,storage }
+module.exports = { cloudinary, storage }
